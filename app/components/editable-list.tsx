@@ -125,7 +125,7 @@ export function ContentEditableField({
   return (
     <div
       ref={ref}
-      className="flex-1 outline-none px-4 py-1"
+      className="flex-1 outline-none px-4 py-1 text-primary"
       contentEditable
       onFocus={(e) => {
         placeCaretAtEnd(e.currentTarget);

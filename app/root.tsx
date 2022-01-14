@@ -13,11 +13,13 @@ import type { LoaderFunction } from "remix";
 import ringStyles from "react-circular-progressbar/dist/styles.css";
 import { getAuthSession } from "~/util/auth.server";
 import styles from "~/tailwind.css";
+import theme from "~/styles/theme.css";
 import { ArchiveIcon, CalendarIcon, LogoutIcon } from "./components/icons";
 
 export function links() {
   return [
     { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: theme },
     { rel: "stylesheet", href: ringStyles },
   ];
 }
@@ -92,13 +94,16 @@ export default function Root() {
 function PrimaryNavLink({
   to,
   children,
+  prefetch,
 }: {
   to: string;
   children: React.ReactNode;
+  prefetch?: "intent" | "render" | "none";
 }) {
   return (
     <NavLink
       to={to}
+      prefetch={prefetch}
       children={children}
       className={({ isActive }) =>
         isActive ? "text-white" : "focus:text-gray-100"
