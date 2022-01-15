@@ -19,7 +19,7 @@ import { ArchiveIcon, CalendarIcon, LogoutIcon } from "./components/icons";
 export function links() {
   return [
     { rel: "stylesheet", href: styles },
-    { rel: "stylesheet", href: theme },
+    // { rel: "stylesheet", href: theme },
     { rel: "stylesheet", href: ringStyles },
   ];
 }
