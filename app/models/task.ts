@@ -6,14 +6,14 @@ import { Task } from "@prisma/client";
 export function getBucketTasks(userId: string, slug: string) {
   return db.bucket.findMany({
     where: { userId, slug },
-    orderBy: { createdAt: "asc" },
+    orderBy: { updatedAt: "asc" },
   });
 }
 
 export function getUnassignedTasks(userId: string) {
   return db.task.findMany({
     where: { userId, bucketId: null },
-    orderBy: { createdAt: "asc" },
+    orderBy: { sortUpdatedAt: "asc" },
   });
 }
 
@@ -44,6 +44,7 @@ export async function getTotalCountsByDate(
 ) {
   let result = await db.task.groupBy({
     by: ["date"],
+    // TODO: why is this here?
     orderBy: { date: "asc" },
     _count: {
       date: true,
@@ -81,6 +82,7 @@ export async function getCompletedCountsByDate(
 ) {
   let result = await db.task.groupBy({
     by: ["date"],
+    // TODO: why is this here?
     orderBy: { date: "asc" },
     _count: {
       date: true,
@@ -151,28 +153,28 @@ export function markIncomplete(id: string) {
 export function addDate(id: string, date: string) {
   return db.task.update({
     where: { id },
-    data: { date },
+    data: { date, sortUpdatedAt: new Date() },
   });
 }
 
 export function removeDate(id: string) {
   return db.task.update({
     where: { id },
-    data: { date: null },
+    data: { date: null, sortUpdatedAt: new Date() },
   });
 }
 
 export function unassignTask(id: string) {
   return db.task.update({
     where: { id },
-    data: { bucketId: null },
+    data: { bucketId: null, sortUpdatedAt: new Date() },
   });
 }
 
 export function assignTask(id: string, bucketId: string) {
   return db.task.update({
     where: { id },
-    data: { bucketId },
+    data: { bucketId, sortUpdatedAt: new Date() },
   });
 }
 
